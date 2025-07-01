@@ -33,11 +33,11 @@ L = np.ones((N, mu_test.size))  # Matrix of ones
 for imeas, single_measure in enumerate(measurement_data):
     for imu, single_mu in enumerate(mu_test):
         #L[imeas,imu] = norm.logpdf(single_measure,loc=single_mu,scale=sigma)
-        L[imeas,imu] = norm.pdf(single_mu,loc=single_measure,scale=sigma[imeas]) #perché è così???
+        L[imeas,imu] = norm.pdf(single_mu,loc=single_measure,scale=sigma[imeas]) #perché è così??? io avrei invertito
 
 # Compute the total likelihood
 #L_total = np.sum(L,0)
-L_total = np.prod(L,0)
+L_total = np.prod(L,0) # is tighter so this is the idea of repeating measurements increase estimates
 
 plt.figure()
 # Plot each single likelihood        
@@ -85,6 +85,7 @@ plt.xlabel('$\mu$')
 plt.ylabel('Likelihood')
 plt.legend()
 plt.title('Comparison of the computed total likelihood and a Gaussian centred at the MLE')
-# perché le due curve dovrebbero avere la stessa forma?
+# perché le due curve dovrebbero avere la stessa forma? è spiegato nei primi minuti della lezione 6
 # perché le normalizzazioni non vanno bene? è probabilmente legato al numero di misure che si fanno?
 
+# il mu reale è tra MLE+- covariance
